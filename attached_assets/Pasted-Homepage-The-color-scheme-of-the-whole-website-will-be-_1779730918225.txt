@@ -1,0 +1,19 @@
+Homepage:
+The color scheme of the whole website will be orange and white. Simplistic. Have animations to make it look smooth. Code in html,css,js.
+Make the homepage have a massive banner on the top, saying “Run for a cause” on it. Under it, have an image and a textbox called “Who we are” on its right. Under it, have a section called”What we do” with a textbox and an image next to it. Under that make a stats section with 3 subsections, all horizontal with numbers increasing. The 4 sections are “People we helped”, “Money Raised for Charity”, ‘Volunteers’. Under that there is a mini section called News sections with a subtitle under it and with 3 image textbox pairs. At the bottom have a gallery section with a bunch of places for images and captions and at the very bottom have a section for a video
+
+About Us:
+Make the page with a banner that has a background img and the words “About Us” on it.  Have a section about weekly charity donations, our yearly br run event. Have a section about how we donate stuff to india, with a section for adding details. Have a section about the Juniors, high school volunteers, and a place to have image + contexts. At the bottom have a Contact Us section with a visit us, mail us, and call use text boxes where we can add info.
+
+Volunteer Work.
+At the top have a banner with an img and have the words Volunteering on it. Under it will be a textbox about the volunteer work we do, with a couple images. Have a section about how we give back to the community with a place for pictures and stuff. Under it will be our biggest event, the BR run, which will have its own section with the date, location, and a summary of the event, with a place for an img. Under it will be a button to register for it.
+
+Juniors Page:
+At the top have a banner with an img and have the words Juniors on it. The page will have a list of events and pictures corresponding to those events, along with a short calender with events with some info about the events.
+
+Nav Bar:
+Have a nav bar for each page and one slot at the end called Donate Now, which just takes you to https://www.paypal.com/donate?token=oAkLV_0JxoRs2EWoks7LT1_FukLIY2-wX-l2ObTEZYikjq6bVGyo3yDTfIXhAd5K_04NLN6L0nBnPJGG
+Have space on the left side for the logo
+
+Footer:
+The footer should be at the bottom of every page and have the copyright, a spot for the logo on the left, 3 buttons for social medias and the info from the contact us section
