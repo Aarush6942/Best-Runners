@@ -242,9 +242,7 @@ export default function Volunteer() {
                   className="w-full rounded-full text-lg py-6 font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 mt-2"
                   asChild
                 >
-                  <a href="https://www.paypal.com/donate?token=oAkLV_0JxoRs2EWoks7LT1_FukLIY2-wX-l2ObTEZYikjq6bVGyo3yDTfIXhAd5K_04NLN6L0nBnPJGG" target="_blank" rel="noopener noreferrer">
-                    Register Now
-                  </a>
+                  <a href="#/register">Register Now</a>
                 </Button>
               </div>
 
