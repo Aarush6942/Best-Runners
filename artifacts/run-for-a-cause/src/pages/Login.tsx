@@ -5,28 +5,27 @@ import { Search, ArrowLeft, UserPlus, CheckCircle, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/lib/supabase";
 
 interface Member {
-  id: number;
   firstName: string;
   lastName: string;
   gender: string;
   age: number;
   runDistance: string;
   shirtSize: string;
-  cost: string;
+  cost: number;
 }
 
 interface RegistrationData {
   id: number;
   email: string;
-  emergencyContact: string;
-  totalAmount: string;
-  donationAmount: string;
-  paymentStatus: string;
-  sponsorCode: string | null;
-  schoolReferralCode: string | null;
-  createdAt: string;
+  emergency_contact: string;
+  total_amount: number;
+  donation_amount: number;
+  sponsor_code: string | null;
+  school_referral_code: string | null;
+  created_at: string;
   members: Member[];
 }
 
@@ -43,13 +42,17 @@ export default function Login() {
     setResult(null);
 
     try {
-      const res = await fetch(`/api/register/lookup?email=${encodeURIComponent(email.trim())}`);
-      if (res.status === 404) {
+      const { data, error: sbError } = await supabase
+        .from("registrations")
+        .select("*")
+        .eq("email", email.trim().toLowerCase())
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (sbError || !data) {
         setError("No registration found for that email address.");
-      } else if (!res.ok) {
-        setError("Something went wrong. Please try again.");
       } else {
-        const data = await res.json();
         setResult(data);
       }
     } catch {
@@ -153,34 +156,28 @@ export default function Login() {
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Emergency Contact</span>
-                        <span className="font-semibold">{result.emergencyContact}</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Payment Status</span>
-                        <span className={`font-semibold capitalize ${result.paymentStatus === "completed" ? "text-green-600" : "text-yellow-600"}`}>
-                          {result.paymentStatus}
-                        </span>
+                        <span className="font-semibold">{result.emergency_contact}</span>
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Total Paid</span>
-                        <span className="font-black text-primary">${parseFloat(result.totalAmount).toFixed(2)}</span>
+                        <span className="font-black text-primary">${Number(result.total_amount).toFixed(2)}</span>
                       </div>
-                      {parseFloat(result.donationAmount) > 0 && (
+                      {Number(result.donation_amount) > 0 && (
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Donation Included</span>
-                          <span className="font-semibold">${parseFloat(result.donationAmount).toFixed(2)}</span>
+                          <span className="font-semibold">${Number(result.donation_amount).toFixed(2)}</span>
                         </div>
                       )}
-                      {result.sponsorCode && (
+                      {result.sponsor_code && (
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">Sponsor Code</span>
-                          <span className="font-semibold">{result.sponsorCode}</span>
+                          <span className="font-semibold">{result.sponsor_code}</span>
                         </div>
                       )}
-                      {result.schoolReferralCode && (
+                      {result.school_referral_code && (
                         <div className="flex justify-between text-sm">
                           <span className="text-muted-foreground">School / Referral Code</span>
-                          <span className="font-semibold">{result.schoolReferralCode}</span>
+                          <span className="font-semibold">{result.school_referral_code}</span>
                         </div>
                       )}
                     </div>
@@ -190,8 +187,8 @@ export default function Login() {
                         Registered Runners ({result.members.length})
                       </h3>
                       <div className="space-y-3">
-                        {result.members.map((m) => (
-                          <div key={m.id} className="bg-white border border-orange-100 rounded-xl p-4 text-sm">
+                        {result.members.map((m, i) => (
+                          <div key={i} className="bg-white border border-orange-100 rounded-xl p-4 text-sm">
                             <div className="font-bold text-foreground mb-2">
                               {m.firstName} {m.lastName}
                             </div>
@@ -200,7 +197,7 @@ export default function Login() {
                               <span>Age: <span className="text-foreground">{m.age}</span></span>
                               <span>Race: <span className="text-foreground font-semibold">{m.runDistance}</span></span>
                               <span>Shirt: <span className="text-foreground">{shirtLabel[m.shirtSize] ?? m.shirtSize}</span></span>
-                              <span>Cost: <span className="text-primary font-semibold">${parseFloat(m.cost).toFixed(2)}</span></span>
+                              <span>Cost: <span className="text-primary font-semibold">${Number(m.cost).toFixed(2)}</span></span>
                             </div>
                           </div>
                         ))}
@@ -208,7 +205,7 @@ export default function Login() {
                     </div>
 
                     <p className="text-xs text-muted-foreground text-center pt-2">
-                      Registered on {new Date(result.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                      Registered on {new Date(result.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                     </p>
                   </motion.div>
                 )}
