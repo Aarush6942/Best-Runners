@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { supabase } from "@/lib/supabase";
 
 const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID || "sb";
 
@@ -101,38 +102,31 @@ export default function SignUp() {
     setSubmitting(true);
     setSubmitError(null);
     try {
-      const body = {
-        email: watchedValues.email,
-        members: membersList.map((m) => ({
-          firstName: m.firstName,
-          lastName: m.lastName,
-          gender: m.gender,
-          age: parseInt(m.age, 10),
-          runDistance: m.runDistance,
-          shirtSize: m.shirtSize,
-          cost: memberCost(m.age),
-        })),
-        emergencyContact: watchedValues.emergencyContact,
-        donationAmount: donation,
-        sponsorCode: watchedValues.sponsorCode || null,
-        schoolReferralCode: watchedValues.schoolReferralCode || null,
-        totalAmount: total,
-        paypalOrderId,
-        termsAccepted: true,
-      };
+      const { data, error } = await supabase
+        .from("registrations")
+        .insert([{
+          email: watchedValues.email,
+          members: membersList.map((m) => ({
+            firstName: m.firstName,
+            lastName: m.lastName,
+            gender: m.gender,
+            age: parseInt(m.age, 10),
+            runDistance: m.runDistance,
+            shirtSize: m.shirtSize,
+            cost: memberCost(m.age),
+          })),
+          emergency_contact: watchedValues.emergencyContact,
+          donation_amount: donation,
+          sponsor_code: watchedValues.sponsorCode || null,
+          school_referral_code: watchedValues.schoolReferralCode || null,
+          total_amount: total,
+          paypal_order_id: paypalOrderId,
+          terms_accepted: true,
+        }])
+        .select()
+        .single();
 
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to save registration");
-      }
-
-      const data = await res.json();
+      if (error) throw error;
       setRegistrationId(data.id);
       setSubmitted(true);
     } catch (e: unknown) {
@@ -360,7 +354,6 @@ export default function SignUp() {
               className="bg-white rounded-2xl border border-orange-100 p-6 space-y-5">
               <h2 className="font-black text-foreground">Terms & Payment</h2>
 
-              {/* Terms */}
               <div>
                 <button type="button" onClick={() => setShowTerms((v) => !v)}
                   className="flex items-center gap-2 text-sm text-primary font-semibold hover:underline mb-3">
@@ -388,7 +381,6 @@ export default function SignUp() {
                   )} />
               </div>
 
-              {/* Total */}
               <div className="bg-orange-50 rounded-xl p-4 space-y-2">
                 {membersList.map((m, i) => {
                   const c = memberCost(m.age);
@@ -420,7 +412,6 @@ export default function SignUp() {
                 </div>
               )}
 
-              {/* PayPal */}
               {canShowPayPal ? (
                 <div>
                   <p className="text-xs text-muted-foreground text-center mb-3">

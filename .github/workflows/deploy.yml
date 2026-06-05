@@ -41,6 +41,9 @@ jobs:
 
       - name: Build
         run: pnpm --filter @workspace/run-for-a-cause run build:github
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
       - name: Collect pages files
         run: mkdir -p _site && cp index.html _site/ && cp -r assets _site/
