@@ -413,11 +413,20 @@ export default function SignUp() {
               )}
 
               {canShowPayPal ? (
-                <div>
-                  <p className="text-xs text-muted-foreground text-center mb-3">
-                    Click the PayPal button below to complete your payment securely.
-                  </p>
-                  <PayPalButtons
+                  <div>
+                    <p className="text-xs text-muted-foreground text-center mb-3">
+                      Click the PayPal button below to complete your payment securely.
+                    </p>
+                    {canShowPayPal && (
+                      <button
+                        type="button"
+                        onClick={() => saveRegistration("TEST-" + Date.now())}
+                        className="w-full py-2 text-sm text-muted-foreground border border-dashed border-gray-300 rounded-lg hover:border-primary hover:text-primary transition-all"
+                      >
+                        Skip Payment (Test Only)
+                      </button>
+                    )}
+                    <PayPalButtons
                     style={{ layout: "vertical", color: "gold", shape: "rect", label: "pay" }}
                     disabled={submitting}
                     createOrder={(_data, actions) => {
