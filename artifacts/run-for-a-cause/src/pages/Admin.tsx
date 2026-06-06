@@ -27,12 +27,18 @@ interface Registration {
   created_at: string;
 }
 
+const ADMIN_PASSWORD = "bestrunners2025";
+
 export default function Admin() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
   useEffect(() => {
+    if (!authenticated) return;
     async function fetchAll() {
       const { data } = await supabase
         .from("registrations")
@@ -42,7 +48,7 @@ export default function Admin() {
       setLoading(false);
     }
     fetchAll();
-  }, []);
+  }, [authenticated]);
 
   const filtered = registrations.filter((r) => {
     const q = search.toLowerCase();
@@ -56,7 +62,49 @@ export default function Admin() {
     );
   });
 
+  const handleLogin = () => {
+    if (passwordInput === ADMIN_PASSWORD) {
+      setAuthenticated(true);
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+    }
+  };
+
   const shirtLabel: Record<string, string> = { S: "Small", M: "Medium", L: "Large", XL: "X-Large" };
+
+  if (!authenticated) {
+    return (
+      <div className="flex flex-col w-full min-h-screen pt-20 bg-gray-50 items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 w-full max-w-sm"
+        >
+          <h1 className="text-2xl font-black text-foreground mb-1">Admin Access</h1>
+          <p className="text-muted-foreground text-sm mb-6">Enter the admin password to continue.</p>
+          <div className="space-y-3">
+            <Input
+              type="password"
+              placeholder="Password"
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+            />
+            {passwordError && (
+              <p className="text-red-500 text-xs">Incorrect password. Try again.</p>
+            )}
+            <button
+              onClick={handleLogin}
+              className="w-full bg-primary text-white font-bold py-2 rounded-lg hover:bg-primary/90 transition-all"
+            >
+              Enter
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full min-h-screen pt-20 bg-gray-50">
@@ -99,7 +147,6 @@ export default function Admin() {
                   animate={{ opacity: 1, y: 0 }}
                   className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
                 >
-                  {/* Registration Header */}
                   <div className="bg-orange-50 px-6 py-4 flex flex-wrap items-center justify-between gap-4 border-b border-orange-100">
                     <div>
                       <div className="font-black text-foreground text-lg">#{r.id} — {r.email}</div>
@@ -115,7 +162,6 @@ export default function Admin() {
                     </div>
                   </div>
 
-                  {/* Members Table */}
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
@@ -143,7 +189,6 @@ export default function Admin() {
                     </table>
                   </div>
 
-                  {/* Footer */}
                   <div className="px-6 py-3 flex flex-wrap gap-4 text-xs text-muted-foreground border-t border-gray-50">
                     <span>Emergency: <span className="text-foreground font-medium">{r.emergency_contact}</span></span>
                     {r.sponsor_code && <span>Sponsor: <span className="text-foreground font-medium">{r.sponsor_code}</span></span>}
