@@ -3,7 +3,7 @@ import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { Plus, Trash2, ArrowLeft, LogIn, ChevronDown, ChevronUp } from "lucide-react";
+import { Plus, Trash2, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -69,8 +69,9 @@ export default function SignUp() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [showTerms, setShowTerms] = useState(false);
   const [registrationId, setRegistrationId] = useState<number | null>(null);
+  const [assignedBibs, setAssignedBibs] = useState<number[]>([]);
 
-  const { register, control, handleSubmit, watch, formState: { errors, isValid } } = useForm<FormData>({
+  const { register, control, watch, formState: { errors, isValid } } = useForm<FormData>({
     mode: "onChange",
     defaultValues: {
       email: "",
@@ -98,10 +99,32 @@ export default function SignUp() {
     total > 0 &&
     membersList.every((m) => m.firstName && m.lastName && m.gender && m.age && m.runDistance && m.shirtSize);
 
+  async function generateBibNumbers(count: number): Promise<number[]> {
+    const { data } = await supabase
+      .from("registrations")
+      .select("bib_numbers");
+
+    const used = new Set<number>();
+    (data ?? []).forEach((r) => {
+      if (r.bib_numbers) r.bib_numbers.forEach((b: number) => used.add(b));
+    });
+
+    const bibs: number[] = [];
+    while (bibs.length < count) {
+      const num = Math.floor(Math.random() * (9000 - 7000 + 1)) + 7000;
+      if (!used.has(num) && !bibs.includes(num)) {
+        bibs.push(num);
+      }
+    }
+    return bibs;
+  }
+
   async function saveRegistration(paypalOrderId: string) {
     setSubmitting(true);
     setSubmitError(null);
     try {
+      const bibNumbers = await generateBibNumbers(membersList.length);
+
       const { data, error } = await supabase
         .from("registrations")
         .insert([{
@@ -122,12 +145,14 @@ export default function SignUp() {
           total_amount: total,
           paypal_order_id: paypalOrderId,
           terms_accepted: true,
+          bib_numbers: bibNumbers,
         }])
         .select()
         .single();
 
       if (error) throw error;
       setRegistrationId(data.id);
+      setAssignedBibs(bibNumbers);
       setSubmitted(true);
     } catch (e: unknown) {
       setSubmitError(e instanceof Error ? e.message : "Something went wrong. Please contact info@bestrunners.org.");
@@ -153,18 +178,24 @@ export default function SignUp() {
           <p className="text-muted-foreground mb-1">
             Registration #{registrationId} confirmed.
           </p>
-          <p className="text-muted-foreground text-sm mb-6">
+          <p className="text-muted-foreground text-sm mb-4">
             A confirmation has been sent to <span className="font-semibold text-foreground">{watchedValues.email}</span>.
             Don't forget to pick up your race packet before race day!
           </p>
-          <div className="space-y-3">
-            <Button className="w-full" onClick={() => navigate("/register/login")}>
-              View My Registration
-            </Button>
-            <Button variant="outline" className="w-full" onClick={() => navigate("/volunteer")}>
-              Back to Volunteer Page
-            </Button>
+          <div className="bg-orange-50 rounded-xl p-4 mb-6">
+            <p className="text-sm font-black text-foreground mb-3">Your BIB Numbers</p>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {membersList.map((m, i) => (
+                <div key={i} className="bg-white border border-orange-200 rounded-lg px-4 py-2 text-center">
+                  <div className="text-xs text-muted-foreground">{m.firstName} {m.lastName}</div>
+                  <div className="text-2xl font-black text-primary">{assignedBibs[i]}</div>
+                </div>
+              ))}
+            </div>
           </div>
+          <Button variant="outline" className="w-full" onClick={() => navigate("/volunteer")}>
+            Back to Volunteer Page
+          </Button>
         </motion.div>
       </div>
     );
@@ -176,14 +207,14 @@ export default function SignUp() {
         <div className="flex-1 py-12 px-4">
           <div className="max-w-2xl mx-auto space-y-6">
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-              <Link href="/register">
+              <Link href="/volunteer">
                 <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
                   <ArrowLeft className="w-4 h-4" /> Back
                 </button>
               </Link>
               <h1 className="text-3xl font-black text-foreground">Register for BR Run 2025</h1>
               <p className="text-muted-foreground text-sm mt-1">
-                September 14, 2025 · Broad Run High School, Ashburn, VA
+                September 14, 2025 · Rock Ridge High School, Ashburn, VA
               </p>
             </motion.div>
 
@@ -413,12 +444,11 @@ export default function SignUp() {
               )}
 
               {canShowPayPal ? (
-                  <div>
-                    <p className="text-xs text-muted-foreground text-center mb-3">
-                      Click the PayPal button below to complete your payment securely.
-                    </p>
-                    
-                    <PayPalButtons
+                <div>
+                  <p className="text-xs text-muted-foreground text-center mb-3">
+                    Click the PayPal button below to complete your payment securely.
+                  </p>
+                  <PayPalButtons
                     style={{ layout: "vertical", color: "gold", shape: "rect", label: "pay" }}
                     disabled={submitting}
                     createOrder={(_data, actions) => {
@@ -456,8 +486,6 @@ export default function SignUp() {
                 </div>
               )}
             </motion.div>
-
-            
           </div>
         </div>
       </div>

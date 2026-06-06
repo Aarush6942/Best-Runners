@@ -25,6 +25,7 @@ interface Registration {
   total_amount: number;
   paypal_order_id: string;
   created_at: string;
+  bib_numbers: number[];
 }
 
 const ADMIN_PASSWORD = "bestrunners2025";
@@ -166,6 +167,7 @@ export default function Admin() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-gray-100 text-xs text-muted-foreground uppercase tracking-wide">
+                          <th className="text-left px-6 py-3">BIB</th>
                           <th className="text-left px-6 py-3">Name</th>
                           <th className="text-left px-6 py-3">Gender</th>
                           <th className="text-left px-6 py-3">Age</th>
@@ -177,6 +179,7 @@ export default function Admin() {
                       <tbody>
                         {r.members.map((m, i) => (
                           <tr key={i} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                            <td className="px-6 py-3 font-black text-primary">{r.bib_numbers?.[i] ?? "—"}</td>
                             <td className="px-6 py-3 font-semibold text-foreground">{m.firstName} {m.lastName}</td>
                             <td className="px-6 py-3 capitalize text-muted-foreground">{m.gender}</td>
                             <td className="px-6 py-3 text-muted-foreground">{m.age}</td>
