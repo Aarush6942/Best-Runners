@@ -73,39 +73,7 @@ export default function About() {
           </motion.blockquote>
         </div>
       </section>
-      {/* BR Run Section */}
-      <section className="py-24 bg-primary text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
-        <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 text-white font-bold text-xs uppercase rounded-full mb-6 tracking-wider">
-            Flagship Event
-          </div>
-          <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tight">
-            13th Annual BR Run for Charity 2025
-          </h2>
-          <p className="text-white/80 text-xl max-w-2xl mx-auto mb-4">
-            Sunday, September 14, 2025 · Rock Ridge High School, Ashburn, VA
-          </p>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto mb-10">
-            Join hundreds of runners for our biggest event of the year. Whether you're running the 5K or walking the 1K, every step you take makes a difference for those in need.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#/register/signup"
-              className="px-8 py-4 bg-white text-primary font-black rounded-full text-lg hover:bg-orange-50 transition-all hover:-translate-y-1 shadow-lg"
-            >
-              Register Now
-            </a>
-            <a
-              href="#/volunteer"
-              className="px-8 py-4 bg-white/20 text-white font-black rounded-full text-lg hover:bg-white/30 transition-all hover:-translate-y-1"
-            >
-              Learn More
-            </a>
-          </div>
-        </div>
-      </section>
+      
       {/* Two Column Layouts */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 md:px-6">
