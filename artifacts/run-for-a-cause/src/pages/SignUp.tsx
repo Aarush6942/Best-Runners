@@ -417,15 +417,7 @@ export default function SignUp() {
                     <p className="text-xs text-muted-foreground text-center mb-3">
                       Click the PayPal button below to complete your payment securely.
                     </p>
-                    {canShowPayPal && (
-                      <button
-                        type="button"
-                        onClick={() => saveRegistration("TEST-" + Date.now())}
-                        className="w-full py-2 text-sm text-muted-foreground border border-dashed border-gray-300 rounded-lg hover:border-primary hover:text-primary transition-all"
-                      >
-                        Skip Payment (Test Only)
-                      </button>
-                    )}
+                    
                     <PayPalButtons
                     style={{ layout: "vertical", color: "gold", shape: "rect", label: "pay" }}
                     disabled={submitting}
@@ -465,14 +457,7 @@ export default function SignUp() {
               )}
             </motion.div>
 
-            <p className="text-center text-sm text-muted-foreground pb-8">
-              Already registered?{" "}
-              <Link href="/register/login">
-                <span className="text-primary font-semibold hover:underline cursor-pointer inline-flex items-center gap-1">
-                  <LogIn className="w-3.5 h-3.5" /> Log in here
-                </span>
-              </Link>
-            </p>
+            
           </div>
         </div>
       </div>

@@ -53,7 +53,148 @@ export default function Volunteer() {
           />
         </div>
       </section>
+      {/* The BR Run Event Section */}
+      <section className="py-24 bg-primary text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
 
+        <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-5xl">
+
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 text-white font-bold text-xs uppercase rounded-full mb-4 tracking-wider">
+              Flagship Event
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">13th Annual Run for Charity 2025</h2>
+            <p className="text-white/80 text-xl max-w-2xl mx-auto">5K &amp; 1K Run/Walk — It's more than a run. It's a celebration of community, health, and giving back.</p>
+          </div>
+
+          {/* Main card */}
+          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl text-foreground mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+              {/* Left: key details */}
+              <div className="flex flex-col gap-6">
+                <div>
+                  <h3 className="text-xl font-black text-foreground mb-4">Race Details</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4 font-medium">
+                      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-primary shrink-0">
+                        <Calendar className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-muted-foreground">Race Date</div>
+                        <div className="font-bold">Sunday, September 14, 2025 — 8:00 AM EST</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4 font-medium">
+                      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-primary shrink-0">
+                        <MapPin className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-muted-foreground">Race Location &amp; Parking</div>
+                        <div className="font-bold">Rock Ridge High School</div>
+                        <div className="text-sm text-muted-foreground">43460 Loudoun Reserve Dr, Ashburn, VA 20148</div>
+                        <div className="text-xs text-orange-600 font-semibold mt-1">Parking accessible until 7:45 AM only</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4 font-medium">
+                      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-primary shrink-0">
+                        <Users className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-sm text-muted-foreground">Prizes</div>
+                        <div className="font-bold">15 post-race raffle prizes</div>
+                        <div className="text-sm text-muted-foreground">All participants entered — must be present to win</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-100 pt-6">
+                  <h3 className="text-lg font-black text-foreground mb-3">Packet Pickup</h3>
+                  <div className="space-y-3 text-sm">
+                    <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
+                      <div className="font-bold text-foreground">Friday, September 12 — 5:00–8:00 PM</div>
+                      <div className="text-muted-foreground">Country Oven — 2501 Centreville Rd, Herndon, VA</div>
+                    </div>
+                    <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
+                      <div className="font-bold text-foreground">Saturday, September 13 — 10:00 AM–2:00 PM</div>
+                      <div className="text-muted-foreground">RRHS — 43460 Loudoun Reserve Dr, Ashburn, VA</div>
+                    </div>
+                    <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
+                      <div className="font-bold text-foreground">Saturday, September 13 — 5:00–7:00 PM</div>
+                      <div className="text-muted-foreground">Ashburn Biryani Grill — 43530 Yukon Dr, Ashburn, VA 20147</div>
+                    </div>
+                    <p className="text-xs text-red-600 font-bold uppercase tracking-wide">Race packets will NOT be available on race day.</p>
+                  </div>
+                </div>
+
+                <Button
+                  size="lg"
+                  className="w-full rounded-full text-lg py-6 font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 mt-2"
+                  asChild
+                >
+                  <a href="#/register/signup">Register Now</a>
+                </Button>
+              </div>
+
+              {/* Right: what you get + entertainment */}
+              <div className="flex flex-col gap-6">
+                <div>
+                  <h3 className="text-xl font-black text-foreground mb-4">What's Waiting for You</h3>
+                  <ul className="space-y-2 text-sm text-foreground">
+                    {[
+                      "Awesome Race T-Shirt",
+                      "Custom Race Bag",
+                      "Finisher Medal — every charity runner is a winner",
+                      "Signature Healthy Snack (sprouts, nuts, dates & coconut)",
+                      "Gluten & Allergy-Free Snack Options",
+                      "Fresh BRT — energizing morning drink",
+                      "Fresh Lemonade — made on-site",
+                      "FREE Falafel Sandwich — redeem with your BIB at Falafel Inc",
+                      "Fresh Fruits — banana, watermelon & oranges",
+                      "Plenty of Clean Drinking Water",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="border-t border-gray-100 pt-6">
+                  <h3 className="text-xl font-black text-foreground mb-4">Entertainment</h3>
+                  <ul className="space-y-2 text-sm text-foreground">
+                    {[
+                      "Live Music by Notes N Beats",
+                      "DJ Set by BR's own Shiv",
+                      "Flash Mob Performances led by Navya & Anu",
+                      "15 Raffle Drawings — drop your BIB in the Raffle Box",
+                      "Prizes for Winners",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-sm mt-auto">
+                  <h4 className="font-bold text-foreground mb-2">Need Help?</h4>
+                  <p className="text-muted-foreground">Race day volunteers wear <span className="font-semibold text-foreground">royal blue T-shirts</span> — ask any volunteer for assistance.</p>
+                  <p className="text-muted-foreground mt-1">Email: <a href="mailto:info@bestrunners.org" className="text-primary hover:underline">info@bestrunners.org</a></p>
+                  <p className="text-muted-foreground mt-3 font-medium">High &amp; middle school students can volunteer to earn service hours — sign up at the race venue.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
       {/* Volunteer Work Overview */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4 md:px-6">
@@ -160,148 +301,7 @@ export default function Volunteer() {
         </div>
       </section>
 
-      {/* The BR Run Event Section */}
-      <section className="py-24 bg-primary text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-black/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-5xl">
-
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 text-white font-bold text-xs uppercase rounded-full mb-4 tracking-wider">
-              Flagship Event
-            </div>
-            <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">13th Annual Run for Charity 2025</h2>
-            <p className="text-white/80 text-xl max-w-2xl mx-auto">5K &amp; 1K Run/Walk — It's more than a run. It's a celebration of community, health, and giving back.</p>
-          </div>
-
-          {/* Main card */}
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-2xl text-foreground mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-
-              {/* Left: key details */}
-              <div className="flex flex-col gap-6">
-                <div>
-                  <h3 className="text-xl font-black text-foreground mb-4">Race Details</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-4 font-medium">
-                      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-primary shrink-0">
-                        <Calendar className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted-foreground">Race Date</div>
-                        <div className="font-bold">Sunday, September 14, 2025 — 8:00 AM EST</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4 font-medium">
-                      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-primary shrink-0">
-                        <MapPin className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted-foreground">Race Location &amp; Parking</div>
-                        <div className="font-bold">Rock Ridge High School</div>
-                        <div className="text-sm text-muted-foreground">43460 Loudoun Reserve Dr, Ashburn, VA 20148</div>
-                        <div className="text-xs text-orange-600 font-semibold mt-1">Parking accessible until 7:45 AM only</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4 font-medium">
-                      <div className="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-primary shrink-0">
-                        <Users className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted-foreground">Prizes</div>
-                        <div className="font-bold">15 post-race raffle prizes</div>
-                        <div className="text-sm text-muted-foreground">All participants entered — must be present to win</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border-t border-gray-100 pt-6">
-                  <h3 className="text-lg font-black text-foreground mb-3">Packet Pickup</h3>
-                  <div className="space-y-3 text-sm">
-                    <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-                      <div className="font-bold text-foreground">Friday, September 12 — 5:00–8:00 PM</div>
-                      <div className="text-muted-foreground">Country Oven — 2501 Centreville Rd, Herndon, VA</div>
-                    </div>
-                    <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-                      <div className="font-bold text-foreground">Saturday, September 13 — 10:00 AM–2:00 PM</div>
-                      <div className="text-muted-foreground">RRHS — 43460 Loudoun Reserve Dr, Ashburn, VA</div>
-                    </div>
-                    <div className="bg-orange-50 rounded-xl p-4 border border-orange-100">
-                      <div className="font-bold text-foreground">Saturday, September 13 — 5:00–7:00 PM</div>
-                      <div className="text-muted-foreground">Ashburn Biryani Grill — 43530 Yukon Dr, Ashburn, VA 20147</div>
-                    </div>
-                    <p className="text-xs text-red-600 font-bold uppercase tracking-wide">Race packets will NOT be available on race day.</p>
-                  </div>
-                </div>
-
-                <Button
-                  size="lg"
-                  className="w-full rounded-full text-lg py-6 font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 mt-2"
-                  asChild
-                >
-                  <a href="#/register">Register Now</a>
-                </Button>
-              </div>
-
-              {/* Right: what you get + entertainment */}
-              <div className="flex flex-col gap-6">
-                <div>
-                  <h3 className="text-xl font-black text-foreground mb-4">What's Waiting for You</h3>
-                  <ul className="space-y-2 text-sm text-foreground">
-                    {[
-                      "Awesome Race T-Shirt",
-                      "Custom Race Bag",
-                      "Finisher Medal — every charity runner is a winner",
-                      "Signature Healthy Snack (sprouts, nuts, dates & coconut)",
-                      "Gluten & Allergy-Free Snack Options",
-                      "Fresh BRT — energizing morning drink",
-                      "Fresh Lemonade — made on-site",
-                      "FREE Falafel Sandwich — redeem with your BIB at Falafel Inc",
-                      "Fresh Fruits — banana, watermelon & oranges",
-                      "Plenty of Clean Drinking Water",
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="border-t border-gray-100 pt-6">
-                  <h3 className="text-xl font-black text-foreground mb-4">Entertainment</h3>
-                  <ul className="space-y-2 text-sm text-foreground">
-                    {[
-                      "Live Music by Notes N Beats",
-                      "DJ Set by BR's own Shiv",
-                      "Flash Mob Performances led by Navya & Anu",
-                      "15 Raffle Drawings — drop your BIB in the Raffle Box",
-                      "Prizes for Winners",
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100 text-sm mt-auto">
-                  <h4 className="font-bold text-foreground mb-2">Need Help?</h4>
-                  <p className="text-muted-foreground">Race day volunteers wear <span className="font-semibold text-foreground">royal blue T-shirts</span> — ask any volunteer for assistance.</p>
-                  <p className="text-muted-foreground mt-1">Email: <a href="mailto:info@bestrunners.org" className="text-primary hover:underline">info@bestrunners.org</a></p>
-                  <p className="text-muted-foreground mt-3 font-medium">High &amp; middle school students can volunteer to earn service hours — sign up at the race venue.</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </section>
+      
 
       {/* Latest Events */}
       <section className="py-24 bg-gray-50 border-t border-gray-100">
