@@ -85,14 +85,12 @@ export default function About() {
           {/* Donating to India */}
           <div className="flex flex-col md:flex-row items-center gap-12 py-16 border-b border-gray-200">
             <div className="w-full md:w-1/2">
-              <div className="aspect-[4/3] bg-orange-100 rounded-2xl flex items-center justify-center p-8">
-                <span className="text-primary/60 font-bold text-xl text-center">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                   <img
                    src={schoolSupport}
                    alt = "Donations to a School in India"
-                   className="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
+                   className="w-full h-full object-cover"
                    />
-                </span>
               </div>
             </div>
             <div className="w-full md:w-1/2">
@@ -112,14 +110,12 @@ export default function About() {
           {/* Juniors Program */}
           <div className="flex flex-col md:flex-row-reverse items-center gap-12 py-16 border-b border-gray-200">
             <div className="w-full md:w-1/2">
-              <div className="aspect-[4/3] bg-orange-100 rounded-2xl flex items-center justify-center p-8">
-                <span className="text-primary/60 font-bold text-xl text-center">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                   <img
                    src={JuniorsPhoto}
                    alt = "Essay Competition"
-                   className="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
+                   className="w-full h-full object-cover"
                    />
-                </span>
               </div>
             </div>
             <div className="w-full md:w-1/2">
@@ -139,14 +135,12 @@ export default function About() {
           {/* Weekly Charity Work */}
           <div className="flex flex-col md:flex-row items-center gap-12 py-16">
             <div className="w-full md:w-1/2">
-              <div className="aspect-[4/3] bg-orange-100 rounded-2xl flex items-center justify-center p-8">
-                <span className="text-primary/60 font-bold text-xl text-center">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
                   <img
                    src={weeklyGiving}
                    alt = "Donation to Loudon Homeless Shelter"
-                   className="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
+                   className="w-full h-full object-cover"
                    />
-                </span>
               </div>
             </div>
             <div className="w-full md:w-1/2">
