@@ -5,8 +5,8 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 
 import heroBg from "@/assets/images/hero.jpg";
-import whoWeAreImg from "@/assets/images/who-we-are.png";
-import whatWeDoImg from "@/assets/images/what-we-do.png";
+import whoWeAreImg from "@/assets/images/who-we-are.jpg";
+import whatWeDoImg from "@/assets/images/what-we-do.jpg";
 
 function Counter({ end, suffix = "", label }: { end: number; suffix?: string; label: string }) {
   const [count, setCount] = useState(0);
