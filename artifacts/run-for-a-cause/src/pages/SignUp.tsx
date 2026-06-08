@@ -177,7 +177,6 @@ export default function SignUp() {
           <h1 className="text-2xl font-black text-foreground mb-2">You're registered!</h1>
           
           <p className="text-muted-foreground text-sm mb-4">
-            A confirmation has been sent to <span className="font-semibold text-foreground">{watchedValues.email}</span>.
             Don't forget to pick up your race packet before race day!
           </p>
           <div className="bg-orange-50 rounded-xl p-4 mb-6">
