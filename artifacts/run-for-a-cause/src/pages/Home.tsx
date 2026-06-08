@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 
-import heroBg from "@/assets/images/hero.png";
+import heroBg from "@/assets/images/hero.jpg";
 import whoWeAreImg from "@/assets/images/who-we-are.png";
 import whatWeDoImg from "@/assets/images/what-we-do.png";
 
