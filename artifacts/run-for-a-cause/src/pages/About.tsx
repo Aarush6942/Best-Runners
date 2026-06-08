@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import { MapPin, Mail, Phone, Calendar } from "lucide-react";
 import aboutBanner from "@/assets/images/about-banner.png";
 
+import weeklyGiving from '@/assets/images/DonationToHomelessShelter.jpg'
+import JuniorsPhoto from "@/assets/images/JuniorsEssayComp.jpg"
+import schoolSupport from "@/assets/images/SupportingSchool.jpg"
+
 export default function About() {
   return (
     <div className="flex flex-col w-full min-h-screen pt-20">
@@ -83,7 +87,11 @@ export default function About() {
             <div className="w-full md:w-1/2">
               <div className="aspect-[4/3] bg-orange-100 rounded-2xl flex items-center justify-center p-8">
                 <span className="text-primary/60 font-bold text-xl text-center">
-                  [Placeholder Image: Aid arriving in rural India]
+                  <img
+                   src={schoolSupport}
+                   alt = "Donations to a School in India"
+                   className="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
+                   />
                 </span>
               </div>
             </div>
@@ -106,7 +114,11 @@ export default function About() {
             <div className="w-full md:w-1/2">
               <div className="aspect-[4/3] bg-orange-100 rounded-2xl flex items-center justify-center p-8">
                 <span className="text-primary/60 font-bold text-xl text-center">
-                  [Placeholder Image: Teenagers volunteering]
+                  <img
+                   src={JuniorsPhoto}
+                   alt = "Essay Competition"
+                   className="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
+                   />
                 </span>
               </div>
             </div>
@@ -129,7 +141,11 @@ export default function About() {
             <div className="w-full md:w-1/2">
               <div className="aspect-[4/3] bg-orange-100 rounded-2xl flex items-center justify-center p-8">
                 <span className="text-primary/60 font-bold text-xl text-center">
-                  [Placeholder Image: Weekly charity work in action]
+                  <img
+                   src={weeklyGiving}
+                   alt = "Donation to Loudon Homeless Shelter"
+                   className="rounded-2xl shadow-xl w-full object-cover aspect-[4/3]"
+                   />
                 </span>
               </div>
             </div>
