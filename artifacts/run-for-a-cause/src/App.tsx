@@ -13,6 +13,8 @@ import Volunteer from "@/pages/Volunteer";
 import Juniors from "@/pages/Juniors";
 import SignUp from "@/pages/SignUp";
 import Admin from "@/pages/Admin";
+import Register from "@/pages/Register";
+import Login from "@/pages/Login";
 
 function useHashLocation(): [string, (to: string) => void] {
   const [loc, setLoc] = useState(() => window.location.hash.slice(1) || "/");
@@ -39,6 +41,8 @@ function Router() {
           <Route path="/juniors" component={Juniors} />
           <Route path="/register/signup" component={SignUp} />
           <Route path="/admin" component={Admin} />
+          <Route path="/register" component={Register} />
+          <Route path="/register/login" component={Login} />
           <Route component={NotFound} />
         </Switch>
       </main>

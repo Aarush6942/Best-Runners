@@ -68,8 +68,8 @@ export default function SignUp() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [showTerms, setShowTerms] = useState(false);
-  const [registrationId, setRegistrationId] = useState<number | null>(null);
   const [assignedBibs, setAssignedBibs] = useState<number[]>([]);
+  const [savedSecretCode, setSavedSecretCode] = useState("");
 
   const { register, control, watch, formState: { errors, isValid } } = useForm<FormData>({
     mode: "onChange",
@@ -124,8 +124,9 @@ export default function SignUp() {
     setSubmitError(null);
     try {
       const bibNumbers = await generateBibNumbers(membersList.length);
+      const secretCode = "BR-" + Math.random().toString(36).substring(2, 8).toUpperCase();
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("registrations")
         .insert([{
           email: watchedValues.email,
@@ -146,13 +147,12 @@ export default function SignUp() {
           paypal_order_id: paypalOrderId,
           terms_accepted: true,
           bib_numbers: bibNumbers,
-        }])
-        .select()
-        .single();
+          secret_code: secretCode,
+        }]);
 
       if (error) throw error;
-      setRegistrationId(data.id);
       setAssignedBibs(bibNumbers);
+      setSavedSecretCode(secretCode);
       setSubmitted(true);
     } catch (e: unknown) {
       setSubmitError(e instanceof Error ? e.message : "Something went wrong. Please contact info@bestrunners.org.");
@@ -175,10 +175,16 @@ export default function SignUp() {
             </svg>
           </div>
           <h1 className="text-2xl font-black text-foreground mb-2">You're registered!</h1>
-          
-          <p className="text-muted-foreground text-sm mb-4">
-            Don't forget to pick up your race packet before race day!
+          <p className="text-muted-foreground text-sm mb-6">
+            Welcome to the 13th Annual BR Run for Charity 2025!
           </p>
+
+          <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 mb-4">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1 font-bold">Your Secret Code</p>
+            <p className="text-3xl font-black text-primary tracking-widest">{savedSecretCode}</p>
+            <p className="text-xs text-muted-foreground mt-2">Save this code to look up your registration later!</p>
+          </div>
+
           <div className="bg-orange-50 rounded-xl p-4 mb-6">
             <p className="text-sm font-black text-foreground mb-3">Your BIB Numbers</p>
             <div className="flex flex-wrap gap-2 justify-center">
@@ -190,6 +196,7 @@ export default function SignUp() {
               ))}
             </div>
           </div>
+
           <Button variant="outline" className="w-full" onClick={() => navigate("/volunteer")}>
             Back to Volunteer Page
           </Button>
@@ -204,7 +211,7 @@ export default function SignUp() {
         <div className="flex-1 py-12 px-4">
           <div className="max-w-2xl mx-auto space-y-6">
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-              <Link href="/volunteer">
+              <Link href="/register">
                 <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
                   <ArrowLeft className="w-4 h-4" /> Back
                 </button>
