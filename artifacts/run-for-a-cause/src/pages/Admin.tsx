@@ -126,32 +126,7 @@ export default function Admin() {
               {registrations.length} total registration{registrations.length !== 1 ? "s" : ""}
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Total Runners</p>
-                <p className="text-3xl font-black text-foreground">
-                  {registrations.reduce((s, r) => s + r.members.length, 0)}
-                </p>
-              </div>
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Total Revenue</p>
-                <p className="text-3xl font-black text-primary">
-                  ${registrations.reduce((s, r) => s + Number(r.total_amount), 0).toFixed(2)}
-                </p>
-              </div>
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Total Donations</p>
-                <p className="text-3xl font-black text-green-600">
-                  ${registrations.reduce((s, r) => s + Number(r.donation_amount), 0).toFixed(2)}
-                </p>
-              </div>
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">5K Runners</p>
-                <p className="text-3xl font-black text-foreground">
-                  {registrations.reduce((s, r) => s + r.members.filter(m => m.runDistance === "5K").length, 0)}
-                </p>
-              </div>
-            </div>
+            
           </motion.div>
 
           <div className="relative mb-6">
