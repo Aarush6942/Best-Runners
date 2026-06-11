@@ -153,7 +153,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="#/register/signup"
+              href="#/register"
               className="px-8 py-4 bg-white text-primary font-black rounded-full text-lg hover:bg-orange-50 transition-all hover:-translate-y-1 shadow-lg"
             >
               Register Now

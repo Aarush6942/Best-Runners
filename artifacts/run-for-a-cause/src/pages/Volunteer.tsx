@@ -135,7 +135,7 @@ export default function Volunteer() {
                   className="w-full rounded-full text-lg py-6 font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 mt-2"
                   asChild
                 >
-                  <a href="#/register/signup">Register Now</a>
+                  <a href="#/register">Register Now</a>
                 </Button>
               </div>
 
