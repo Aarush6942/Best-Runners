@@ -25,7 +25,7 @@ interface Registration {
   total_amount: number;
   paypal_order_id: string;
   created_at: string;
-  bib_numbers: number[];
+  bib_numbers: number[] | null;
   secret_code: string;
 }
 
@@ -38,6 +38,8 @@ export default function Admin() {
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState(false);
+  const [bibInputs, setBibInputs] = useState<Record<string, string>>({});
+  const [savingBib, setSavingBib] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authenticated) return;
@@ -73,6 +75,30 @@ export default function Admin() {
       setPasswordError(true);
     }
   };
+
+  async function saveBib(registrationId: number, memberIndex: number, bibValue: string) {
+    const key = `${registrationId}-${memberIndex}`;
+    setSavingBib(key);
+
+    const registration = registrations.find(r => r.id === registrationId);
+    if (!registration) return;
+
+    const newBibs = [...(registration.bib_numbers ?? registration.members.map(() => 0))];
+    newBibs[memberIndex] = parseInt(bibValue, 10);
+
+    const { error } = await supabase
+      .from("registrations")
+      .update({ bib_numbers: newBibs })
+      .eq("id", registrationId);
+
+    if (!error) {
+      setRegistrations(prev => prev.map(r =>
+        r.id === registrationId ? { ...r, bib_numbers: newBibs } : r
+      ));
+    }
+
+    setSavingBib(null);
+  }
 
   const shirtLabel: Record<string, string> = { S: "Small", M: "Medium", L: "Large", XL: "X-Large" };
 
@@ -125,8 +151,6 @@ export default function Admin() {
             <p className="text-muted-foreground text-sm mb-6">
               {registrations.length} total registration{registrations.length !== 1 ? "s" : ""}
             </p>
-
-            
           </motion.div>
 
           <div className="relative mb-6">
@@ -167,24 +191,52 @@ export default function Admin() {
                   </thead>
                   <tbody>
                     {filtered.flatMap((r) =>
-                      r.members.map((m, i) => (
-                        <tr key={`${r.id}-${i}`} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                          <td className="px-4 py-3 font-black text-primary">{r.bib_numbers?.[i] ?? "—"}</td>
-                          <td className="px-4 py-3 font-semibold text-foreground whitespace-nowrap">{m.firstName} {m.lastName}</td>
-                          <td className="px-4 py-3 text-muted-foreground">{i === 0 ? r.email : ""}</td>
-                          <td className="px-4 py-3 capitalize text-muted-foreground">{m.gender}</td>
-                          <td className="px-4 py-3 text-muted-foreground">{m.age}</td>
-                          <td className="px-4 py-3 font-bold text-primary">{m.runDistance}</td>
-                          <td className="px-4 py-3 text-muted-foreground">{shirtLabel[m.shirtSize] ?? m.shirtSize}</td>
-                          <td className="px-4 py-3 font-semibold">${Number(m.cost).toFixed(2)}</td>
-                          <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{i === 0 ? r.emergency_contact : ""}</td>
-                          <td className="px-4 py-3 font-black text-primary tracking-wider">{i === 0 ? r.secret_code : ""}</td>
-                          <td className="px-4 py-3 text-muted-foreground">{i === 0 ? (r.sponsor_code ?? "—") : ""}</td>
-                          <td className="px-4 py-3 text-muted-foreground">{i === 0 ? (r.school_referral_code ?? "—") : ""}</td>
-                          <td className="px-4 py-3 font-black text-primary">{i === 0 ? `$${Number(r.total_amount).toFixed(2)}` : ""}</td>
-                          <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{i === 0 ? new Date(r.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : ""}</td>
-                        </tr>
-                      ))
+                      r.members.map((m, i) => {
+                        const key = `${r.id}-${i}`;
+                        const currentBib = r.bib_numbers?.[i];
+                        const bibInput = bibInputs[key] ?? (currentBib ? String(currentBib) : "");
+                        return (
+                          <tr key={key} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-2">
+                                <input
+                                  type="number"
+                                  value={bibInput}
+                                  onChange={(e) => setBibInputs(prev => ({ ...prev, [key]: e.target.value }))}
+                                  onBlur={() => {
+                                    if (bibInput && bibInput !== String(currentBib)) {
+                                      saveBib(r.id, i, bibInput);
+                                    }
+                                  }}
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter" && bibInput && bibInput !== String(currentBib)) {
+                                      saveBib(r.id, i, bibInput);
+                                    }
+                                  }}
+                                  placeholder="—"
+                                  className="w-20 border rounded px-2 py-1 text-sm font-black text-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                                />
+                                {savingBib === key && (
+                                  <span className="text-xs text-muted-foreground">Saving...</span>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3 font-semibold text-foreground whitespace-nowrap">{m.firstName} {m.lastName}</td>
+                            <td className="px-4 py-3 text-muted-foreground">{i === 0 ? r.email : ""}</td>
+                            <td className="px-4 py-3 capitalize text-muted-foreground">{m.gender}</td>
+                            <td className="px-4 py-3 text-muted-foreground">{m.age}</td>
+                            <td className="px-4 py-3 font-bold text-primary">{m.runDistance}</td>
+                            <td className="px-4 py-3 text-muted-foreground">{shirtLabel[m.shirtSize] ?? m.shirtSize}</td>
+                            <td className="px-4 py-3 font-semibold">${Number(m.cost).toFixed(2)}</td>
+                            <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{i === 0 ? r.emergency_contact : ""}</td>
+                            <td className="px-4 py-3 font-black text-primary tracking-wider">{i === 0 ? r.secret_code : ""}</td>
+                            <td className="px-4 py-3 text-muted-foreground">{i === 0 ? (r.sponsor_code ?? "—") : ""}</td>
+                            <td className="px-4 py-3 text-muted-foreground">{i === 0 ? (r.school_referral_code ?? "—") : ""}</td>
+                            <td className="px-4 py-3 font-black text-primary">{i === 0 ? `$${Number(r.total_amount).toFixed(2)}` : ""}</td>
+                            <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">{i === 0 ? new Date(r.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : ""}</td>
+                          </tr>
+                        );
+                      })
                     )}
                   </tbody>
                 </table>

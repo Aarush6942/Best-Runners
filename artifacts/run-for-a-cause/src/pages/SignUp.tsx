@@ -68,7 +68,6 @@ export default function SignUp() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [showTerms, setShowTerms] = useState(false);
-  const [assignedBibs, setAssignedBibs] = useState<number[]>([]);
   const [savedSecretCode, setSavedSecretCode] = useState("");
 
   const { register, control, watch, formState: { errors, isValid } } = useForm<FormData>({
@@ -99,31 +98,10 @@ export default function SignUp() {
     total > 0 &&
     membersList.every((m) => m.firstName && m.lastName && m.gender && m.age && m.runDistance && m.shirtSize);
 
-  async function generateBibNumbers(count: number): Promise<number[]> {
-    const { data } = await supabase
-      .from("registrations")
-      .select("bib_numbers");
-
-    const used = new Set<number>();
-    (data ?? []).forEach((r) => {
-      if (r.bib_numbers) r.bib_numbers.forEach((b: number) => used.add(b));
-    });
-
-    const bibs: number[] = [];
-    while (bibs.length < count) {
-      const num = Math.floor(Math.random() * (9000 - 7000 + 1)) + 7000;
-      if (!used.has(num) && !bibs.includes(num)) {
-        bibs.push(num);
-      }
-    }
-    return bibs;
-  }
-
   async function saveRegistration(paypalOrderId: string) {
     setSubmitting(true);
     setSubmitError(null);
     try {
-      const bibNumbers = await generateBibNumbers(membersList.length);
       const secretCode = "BR-" + Math.random().toString(36).substring(2, 8).toUpperCase();
 
       const { error } = await supabase
@@ -146,12 +124,10 @@ export default function SignUp() {
           total_amount: total,
           paypal_order_id: paypalOrderId,
           terms_accepted: true,
-          bib_numbers: bibNumbers,
           secret_code: secretCode,
         }]);
 
       if (error) throw error;
-      setAssignedBibs(bibNumbers);
       setSavedSecretCode(secretCode);
       setSubmitted(true);
     } catch (e: unknown) {
@@ -179,22 +155,10 @@ export default function SignUp() {
             Welcome to the 13th Annual BR Run for Charity 2025!
           </p>
 
-          <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 mb-4">
+          <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 mb-6">
             <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1 font-bold">Your Secret Code</p>
             <p className="text-3xl font-black text-primary tracking-widest">{savedSecretCode}</p>
             <p className="text-xs text-muted-foreground mt-2">Save this code to look up your registration later!</p>
-          </div>
-
-          <div className="bg-orange-50 rounded-xl p-4 mb-6">
-            <p className="text-sm font-black text-foreground mb-3">Your BIB Numbers</p>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {membersList.map((m, i) => (
-                <div key={i} className="bg-white border border-orange-200 rounded-lg px-4 py-2 text-center">
-                  <div className="text-xs text-muted-foreground">{m.firstName} {m.lastName}</div>
-                  <div className="text-2xl font-black text-primary">{assignedBibs[i]}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           <Button variant="outline" className="w-full" onClick={() => navigate("/volunteer")}>
@@ -222,7 +186,6 @@ export default function SignUp() {
               </p>
             </motion.div>
 
-            {/* Email */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
               className="bg-white rounded-2xl border border-orange-100 p-6">
               <h2 className="font-black text-foreground mb-4">Contact Email</h2>
@@ -239,7 +202,6 @@ export default function SignUp() {
               </div>
             </motion.div>
 
-            {/* Members */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
               className="bg-white rounded-2xl border border-orange-100 p-6 space-y-6">
               <h2 className="font-black text-foreground">Runners</h2>
@@ -347,7 +309,6 @@ export default function SignUp() {
               </button>
             </motion.div>
 
-            {/* Additional Info */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
               className="bg-white rounded-2xl border border-orange-100 p-6 space-y-4">
               <h2 className="font-black text-foreground">Additional Information</h2>
@@ -384,7 +345,6 @@ export default function SignUp() {
               </div>
             </motion.div>
 
-            {/* Terms, Total, Pay */}
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
               className="bg-white rounded-2xl border border-orange-100 p-6 space-y-5">
               <h2 className="font-black text-foreground">Terms & Payment</h2>
