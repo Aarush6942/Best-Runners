@@ -127,13 +127,25 @@ export default function SignUp() {
           secret_code: secretCode,
         }]);
       await supabase.functions.invoke('send-confirmation-email', {
-          body: {
-            email: watchedValues.email,
-            members: membersList,
-            secretCode: secretCode,
-            bibNumbers: null,
-          }
-        });
+      body: {
+          email: watchedValues.email,
+          members: membersList.map((m) => ({
+            firstName: m.firstName,
+            lastName: m.lastName,
+            gender: m.gender,
+            age: m.age,
+            runDistance: m.runDistance,
+            shirtSize: m.shirtSize,
+            cost: memberCost(m.age),
+          })),
+          secretCode: secretCode,
+          emergencyContact: watchedValues.emergencyContact,
+          donationAmount: donation,
+          sponsorCode: watchedValues.sponsorCode || null,
+          schoolReferralCode: watchedValues.schoolReferralCode || null,
+          totalAmount: total,
+        }
+      });
       if (error) throw error;
       setSavedSecretCode(secretCode);
       setSubmitted(true);
