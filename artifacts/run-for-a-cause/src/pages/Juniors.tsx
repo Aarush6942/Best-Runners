@@ -4,7 +4,7 @@ import juniorsBanner from "@/assets/images/juniors-banner.png";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const MONTH_NAME = "June 2025";
+const MONTH_NAME = "June 2026";
 
 const calendarEvents: Record<number, { label: string; color: string }[]> = {
   1:  [{ label: "Intelligo, 3–5 PM", color: "bg-orange-400" }],
@@ -52,7 +52,7 @@ const programs = [
     description:
       "Our virtual education series runs throughout July, letting Juniors members teach what they know — and learn what they don't. Each week, a student volunteer leads a 45-minute class on a subject they're passionate about, from history and literature to environmental science and coding. Classes are streamed live and recorded for on-demand viewing, making education accessible to anyone, anywhere.",
     details: [
-      { label: "When", value: "July 2025 — Saturdays, 11:00 AM – 12:00 PM (online)" },
+      { label: "When", value: "July 2026 — Saturdays, 11:00 AM – 12:00 PM (online)" },
       { label: "Subjects", value: "History, Literature, Environmental Science, Coding" },
       { label: "Platform", value: "Google Meet (link sent to members)" },
     ],

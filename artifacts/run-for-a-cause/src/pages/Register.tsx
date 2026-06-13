@@ -19,10 +19,10 @@ export default function Register() {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-foreground mb-4">
-              BR Run 2025
+              BR Run 2026
             </h1>
             <p className="text-lg text-muted-foreground">
-              13th Annual Run for Charity — September 14, 2025
+              13th Annual Run for Charity — September 14, 2026
             </p>
             <div className="h-1 w-16 bg-primary rounded-full mx-auto mt-4" />
           </motion.div>

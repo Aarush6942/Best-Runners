@@ -143,10 +143,10 @@ export default function Home() {
             Flagship Event
           </div>
           <h2 className="text-5xl md:text-6xl font-black mb-6 tracking-tight">
-            13th Annual BR Run for Charity 2025
+            13th Annual BR Run for Charity 2026
           </h2>
           <p className="text-white/80 text-xl max-w-2xl mx-auto mb-4">
-            Sunday, September 14, 2025 · Rock Ridge High School, Ashburn, VA
+            Sunday, September 14, 2026 · Rock Ridge High School, Ashburn, VA
           </p>
           <p className="text-white/70 text-lg max-w-2xl mx-auto mb-10">
             Join hundreds of runners for our biggest event of the year. Whether you're running the 5K or walking the 1K, every step you take makes a difference for those in need.

@@ -13,7 +13,7 @@ export default function Volunteer() {
     },
     {
       title: "Ekadasi Fasting Day",
-      date: "May 26, 2025",
+      date: "May 26, 2026",
       location: "Community-Wide",
       description: "Join us in observing Ekadasi — a full day of fasting practiced to cleanse the body and mind. We come together as a community to support one another through mindful rest and reflection.",
     },
@@ -65,7 +65,7 @@ export default function Volunteer() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 text-white font-bold text-xs uppercase rounded-full mb-4 tracking-wider">
               Flagship Event
             </div>
-            <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">13th Annual Run for Charity 2025</h2>
+            <h2 className="text-5xl md:text-6xl font-black mb-4 tracking-tight">13th Annual Run for Charity 2026</h2>
             <p className="text-white/80 text-xl max-w-2xl mx-auto">5K &amp; 1K Run/Walk — It's more than a run. It's a celebration of community, health, and giving back.</p>
           </div>
 
@@ -84,7 +84,7 @@ export default function Volunteer() {
                       </div>
                       <div>
                         <div className="text-sm text-muted-foreground">Race Date</div>
-                        <div className="font-bold">Sunday, September 14, 2025 — 8:00 AM EST</div>
+                        <div className="font-bold">Sunday, September 14, 2026 — 8:00 AM EST</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-4 font-medium">

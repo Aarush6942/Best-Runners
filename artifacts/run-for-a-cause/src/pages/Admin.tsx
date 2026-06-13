@@ -29,7 +29,7 @@ interface Registration {
   secret_code: string;
 }
 
-const ADMIN_PASSWORD = "bestrunners2025";
+const ADMIN_PASSWORD = "bestrunners2026";
 
 export default function Admin() {
   const [registrations, setRegistrations] = useState<Registration[]>([]);

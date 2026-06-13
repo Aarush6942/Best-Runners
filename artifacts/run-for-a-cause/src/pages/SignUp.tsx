@@ -46,7 +46,7 @@ function memberCost(age: string): number {
   return n >= 12 ? 25 : 15;
 }
 
-const TERMS = `By registering for the 13th Annual BR Run for Charity 2025, participants agree to the following terms and conditions:
+const TERMS = `By registering for the 13th Annual BR Run for Charity 2026, participants agree to the following terms and conditions:
 
 1. Participation Risk: Running is a physically demanding activity. Participants confirm they are medically fit to participate and do so at their own risk. Best Runners is not liable for any injury, illness, or loss.
 
@@ -171,7 +171,7 @@ export default function SignUp() {
           </div>
           <h1 className="text-2xl font-black text-foreground mb-2">You're registered!</h1>
           <p className="text-muted-foreground text-sm mb-6">
-            Welcome to the 13th Annual BR Run for Charity 2025!
+            Welcome to the 13th Annual BR Run for Charity 2026!
           </p>
 
           <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 mb-6">
@@ -199,9 +199,9 @@ export default function SignUp() {
                   <ArrowLeft className="w-4 h-4" /> Back
                 </button>
               </Link>
-              <h1 className="text-3xl font-black text-foreground">Register for BR Run 2025</h1>
+              <h1 className="text-3xl font-black text-foreground">Register for BR Run 2026</h1>
               <p className="text-muted-foreground text-sm mt-1">
-                September 14, 2025 · Rock Ridge High School, Ashburn, VA
+                September 14, 2026 · Rock Ridge High School, Ashburn, VA
               </p>
             </motion.div>
 
@@ -439,7 +439,7 @@ export default function SignUp() {
                         intent: "CAPTURE",
                         purchase_units: [
                           {
-                            description: "BR Run 2025 Registration",
+                            description: "BR Run 2026 Registration",
                             amount: {
                               currency_code: "USD",
                               value: total.toFixed(2),
