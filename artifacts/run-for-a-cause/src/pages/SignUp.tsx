@@ -126,7 +126,14 @@ export default function SignUp() {
           terms_accepted: true,
           secret_code: secretCode,
         }]);
-
+      await supabase.functions.invoke('send-confirmation-email', {
+          body: {
+            email: watchedValues.email,
+            members: membersList,
+            secretCode: secretCode,
+            bibNumbers: null,
+          }
+        });
       if (error) throw error;
       setSavedSecretCode(secretCode);
       setSubmitted(true);
